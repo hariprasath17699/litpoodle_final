@@ -5,6 +5,7 @@ import 'package:litpoodle/components/colors.dart';
 import 'package:litpoodle/components/domain_url.dart';
 import 'package:litpoodle/screens/login_screen.dart';
 import 'package:http/http.dart' as http;
+import 'package:localstorage/localstorage.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key key}) : super(key: key);
@@ -39,6 +40,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   FocusNode emailFocusNode = new FocusNode();
   FocusNode pswdFocusNode = new FocusNode();
   FocusNode cpswdFocusNode = new FocusNode();
+  final LocalStorage storage = new LocalStorage('litpoodle');
   Future<void> _submit() async {
     // ignore: unused_local_variable
     DateTime now = DateTime.now();
@@ -68,6 +70,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       setState(() {
         _isLoading = true;
         form.save();
+        storage.setItem("login", "true");
         Navigator.of(context).push(
           MaterialPageRoute(builder: (context) => LoginScreen()),
         );

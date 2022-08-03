@@ -153,6 +153,7 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
     DashboardScreen(),
   ];
   int index = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

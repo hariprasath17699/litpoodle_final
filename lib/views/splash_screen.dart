@@ -4,6 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:litpoodle/components/colors.dart';
 import 'package:litpoodle/views/onboard_screen.dart';
+import 'package:localstorage/localstorage.dart';
+
+import '../screens/bottom/bottom_navigation_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key key}) : super(key: key);
@@ -13,14 +16,22 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  final LocalStorage storage = new LocalStorage('litpoodle');
   @override
   void initState() {
     super.initState();
     Timer(const Duration(seconds: 3), () {
-      Navigator.of(context).pushReplacement(
-        // MaterialPageRoute(builder: (_) => WelcomeScreen()),
-        MaterialPageRoute(builder: (_) => OnboardingPage()),
-      );
+      if(storage.getItem("login") == "true"){
+        Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => BottomNavScreen()),
+        );
+      }else{
+        Navigator.of(context).pushReplacement(
+          // MaterialPageRoute(builder: (_) => WelcomeScreen()),
+          MaterialPageRoute(builder: (_) => OnboardingPage()),
+        );
+      }
+
     });
   }
 

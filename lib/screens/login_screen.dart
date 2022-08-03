@@ -14,6 +14,7 @@ import 'package:litpoodle/screens/bottom/home_screen.dart';
 import 'package:litpoodle/screens/chart.dart';
 import 'package:litpoodle/screens/forgetpassword_screen.dart';
 import 'package:litpoodle/screens/register_screen.dart';
+import 'package:localstorage/localstorage.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -38,7 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
   FocusNode pswdFocusNode = new FocusNode();
   var key = "null";
   var encryptedText, plainText;
-
+  final LocalStorage storage = new LocalStorage('litpoodle');
   var reg = RegExp(
       r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
   String _email, _password;
@@ -347,7 +348,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                 //fillColor: MaterialStateProperty.resolveWith(),
                                 onChanged: (value) {
                                   isChecked = !isChecked;
-                                  setState(() {});
+                                  setState(() {
+                                    if(isChecked == true){
+                                      storage.setItem("login", "true");
+                                    }
+                                  });
                                 },
                               ),
                             ),

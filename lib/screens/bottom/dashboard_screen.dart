@@ -18,6 +18,7 @@ import 'package:litpoodle/screens/bottom/wishlist_screen.dart';
 import 'package:litpoodle/screens/login_screen.dart';
 import 'package:litpoodle/screens/notificationscreen.dart';
 import 'package:litpoodle/screens/profile_screen/profile.dart';
+import 'package:localstorage/localstorage.dart';
 import 'package:provider/provider.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -28,6 +29,7 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
+  final LocalStorage storage = new LocalStorage('litpoodle');
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -358,6 +360,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   FlutterSession().set('token', '');
                   Provider.of<GoogleSignInController>(context, listen: false)
                       .logout();
+                  storage.setItem("login", "false");
                   Navigator.of(context).push(
                     MaterialPageRoute(builder: (context) => LoginScreen()),
                   );
