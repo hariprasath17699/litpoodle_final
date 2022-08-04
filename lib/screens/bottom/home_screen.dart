@@ -62,195 +62,218 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        drawer: DrawerScreen(),
-        appBar: AppBar(
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(15),
-                  bottomRight: Radius.circular(15))),
-          bottom: PreferredSize(
-            preferredSize: Size.fromHeight(50.0),
-            child: Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                //crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Column(
-                    children: [
-                      SearchWidget(),
-                    ],
-                  ),
+  Widget build(BuildContext context) => WillPopScope(
 
-                  // FutureBuilder(
-                  //     future: data,
-                  //     // ignore: missing_return
-                  //     builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  //       if (snapshot.hasData) {
-                  //         Text(snapshot.data);
-                  //       }
-                  //     })
-                ],
+    onWillPop: () => showDialog<bool>(
+      context: context,
+
+      builder: (c) => AlertDialog(
+
+        title: Text('Warning'),
+        content: Text('Do you really want to exit'),
+        actions: [
+          FlatButton(
+            child: Text('Yes'),
+            onPressed: () => Navigator.pop(c, true),
+          ),
+          FlatButton(
+            child: Text('No'),
+            onPressed: () => Navigator.pop(c, false),
+          ),
+        ],
+      ),
+    ),
+    child: Scaffold(
+          drawer: DrawerScreen(),
+          appBar: AppBar(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(15),
+                    bottomRight: Radius.circular(15))),
+            bottom: PreferredSize(
+              preferredSize: Size.fromHeight(50.0),
+              child: Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  //crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Column(
+                      children: [
+                        SearchWidget(),
+                      ],
+                    ),
+
+                    // FutureBuilder(
+                    //     future: data,
+                    //     // ignore: missing_return
+                    //     builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    //       if (snapshot.hasData) {
+                    //         Text(snapshot.data);
+                    //       }
+                    //     })
+                  ],
+                ),
               ),
             ),
-          ),
-          title: Row(
-            //mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              FutureBuilder(
-                  future: profilecall(),
-                  // ignore: missing_return
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          // Text(model.googleAccount.email),
-                          Text(
-                            snapshot.data["user-details"]["firstname"]
-                                    .toString() ??
-                                "",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w800),
-                          ),
-                          SizedBox(
-                            width: 2,
-                          ),
-                          Text(
-                            snapshot.data["user-details"]["lastname"]
-                                    .toString() ??
-                                "",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w800),
-                          ),
-                        ],
-                      );
-                    } else {
-                      Center(
-                        child: Text("Some Thing Went Wrong"),
-                      );
-                    }
-                    return SizedBox(
-                      //height: 100,
-                      child: Center(
-                          child: CircularProgressIndicator(
-                        color: secondarycolor,
-                      )),
-                    );
-                  }),
-              // Text(
-              //   '',
-              //   // "Hi Ashlee",
-              //   style:
-              //       TextStyle(color: Colors.black, fontWeight: FontWeight.w800),
-              // ),
-              Spacer(),
-              NotificationIcon()
-            ],
-          ),
-          leading: Builder(
-            builder: (context) => IconButton(
-              icon: Container(
-                  // height: 30,
-                  // width: 30,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(20)),
-                  ),
-                  // child: Icon(
-                  //   Icons.person,
-                  //   color: Colors.grey[600],
-                  //   size: 25,
-                  // ),
-                  child: FutureBuilder(
-                      future: profilecall(),
-                      // ignore: missing_return
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          return CircleAvatar(
-                            backgroundColor: secondarycolor,
-                            backgroundImage: NetworkImage(
-                                snapshot.data["user-details"]["profile-image"]),
-                            radius: 80,
-                          );
-                        } else {
-                          Center(
-                            child: Text("Some Thing Went Wrong"),
-                          );
-                        }
-                        return SizedBox(
-                          height: 100,
-                          child: Center(
-                              child: CircularProgressIndicator(
-                            color: secondarycolor,
-                          )),
+            title: Row(
+              //mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                FutureBuilder(
+                    future: profilecall(),
+                    // ignore: missing_return
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // Text(model.googleAccount.email),
+                            Text(
+                              snapshot.data["user-details"]["firstname"]
+                                      .toString() ??
+                                  "",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w800),
+                            ),
+                            SizedBox(
+                              width: 2,
+                            ),
+                            Text(
+                              snapshot.data["user-details"]["lastname"]
+                                      .toString() ??
+                                  "",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w800),
+                            ),
+                          ],
                         );
-                      })),
-              // onPressed: () => DrawerScreen()
-              onPressed: () => Scaffold.of(context).openDrawer(),
+                      } else {
+                        Center(
+                          child: Text("Some Thing Went Wrong"),
+                        );
+                      }
+                      return SizedBox(
+                        //height: 100,
+                        child: Center(
+                            child: CircularProgressIndicator(
+                          color: secondarycolor,
+                        )),
+                      );
+                    }),
+                // Text(
+                //   '',
+                //   // "Hi Ashlee",
+                //   style:
+                //       TextStyle(color: Colors.black, fontWeight: FontWeight.w800),
+                // ),
+                Spacer(),
+                NotificationIcon()
+              ],
+            ),
+            leading: Builder(
+              builder: (context) => IconButton(
+                icon: Container(
+                    // height: 30,
+                    // width: 30,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                    ),
+                    // child: Icon(
+                    //   Icons.person,
+                    //   color: Colors.grey[600],
+                    //   size: 25,
+                    // ),
+                    child: FutureBuilder(
+                        future: profilecall(),
+                        // ignore: missing_return
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            return CircleAvatar(
+                              backgroundColor: secondarycolor,
+                              backgroundImage: NetworkImage(
+                                  snapshot.data["user-details"]["profile-image"]),
+                              radius: 80,
+                            );
+                          } else {
+                            Center(
+                              child: Text("Some Thing Went Wrong"),
+                            );
+                          }
+                          return SizedBox(
+                            height: 100,
+                            child: Center(
+                                child: CircularProgressIndicator(
+                              color: secondarycolor,
+                            )),
+                          );
+                        })),
+                // onPressed: () => DrawerScreen()
+                onPressed: () => Scaffold.of(context).openDrawer(),
+              ),
+            ),
+            iconTheme: IconThemeData(color: secondarycolor),
+            // backgroundColor: Colors.white,
+            backgroundColor: secondarycolor,
+            elevation: 0,
+            // /actions: [],
+            //actions: [Drawer()],
+          ),
+          body: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
+            child: Column(
+              children: [
+                ScrollableContainer(),
+
+                ////////////////////
+              ],
             ),
           ),
-          iconTheme: IconThemeData(color: secondarycolor),
-          // backgroundColor: Colors.white,
-          backgroundColor: secondarycolor,
-          elevation: 0,
-          // /actions: [],
-          //actions: [Drawer()],
+
+          // body: SafeArea(
+          //   child: Padding(
+          //     padding: EdgeInsets.symmetric(horizontal: 20),
+          //     child: SearchBar<Post>(
+          //         minimumChars: 0,
+          //         onSearch: search,
+          //         onItemFound: (Post post, int index) {
+          //           return ListTile(
+          //             title: Text(post.title),
+          //             // subtitle: Text(post.description),
+          //           );
+          //         }),
+          //   ),
+          // ),
+
+          // body: new ListView.builder(
+          //   itemCount: 1,
+          //   padding: EdgeInsets.zero,
+          //   itemBuilder: (context, index) {
+          //     return StickyHeader(
+          //       header: HomeWelcome(),
+          //       content: SingleChildScrollView(
+          //         scrollDirection: Axis.vertical,
+          //         physics: BouncingScrollPhysics(),
+          //         child: Container(
+          //           child: Column(
+          //             children: [
+          //               ScrollableContainer(),
+          //               //Recommended(),
+          //             ],
+          //           ),
+          //         ),
+          //       ),
+          //     );
+          //   },
+          // ),
+
         ),
-        body: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
-          child: Column(
-            children: [
-              ScrollableContainer(),
-
-              ////////////////////
-            ],
-          ),
-        ),
-
-        // body: SafeArea(
-        //   child: Padding(
-        //     padding: EdgeInsets.symmetric(horizontal: 20),
-        //     child: SearchBar<Post>(
-        //         minimumChars: 0,
-        //         onSearch: search,
-        //         onItemFound: (Post post, int index) {
-        //           return ListTile(
-        //             title: Text(post.title),
-        //             // subtitle: Text(post.description),
-        //           );
-        //         }),
-        //   ),
-        // ),
-
-        // body: new ListView.builder(
-        //   itemCount: 1,
-        //   padding: EdgeInsets.zero,
-        //   itemBuilder: (context, index) {
-        //     return StickyHeader(
-        //       header: HomeWelcome(),
-        //       content: SingleChildScrollView(
-        //         scrollDirection: Axis.vertical,
-        //         physics: BouncingScrollPhysics(),
-        //         child: Container(
-        //           child: Column(
-        //             children: [
-        //               ScrollableContainer(),
-        //               //Recommended(),
-        //             ],
-        //           ),
-        //         ),
-        //       ),
-        //     );
-        //   },
-        // ),
-      );
+  );
 }
 
 

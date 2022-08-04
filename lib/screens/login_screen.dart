@@ -70,7 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
         print(loginpassword);
         Navigator.pop(context);
 
-        Navigator.of(context).push(
+        Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => BottomNavScreen()),
         );
       });
