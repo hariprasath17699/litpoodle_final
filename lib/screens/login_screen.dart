@@ -59,8 +59,8 @@ class _LoginScreenState extends State<LoginScreen> {
     var streamedResponse = await request.send();
     var response = await http.Response.fromStream(streamedResponse);
     final result = jsonDecode(response.body) as Map<String, dynamic>;
-
-    if (response.statusCode == 200) {
+    print(" Result: ${result}");
+    if (result["message"] != "Invalid Username and Password") {
       await FlutterSession().set("token", result["token"]);
 
       setState(() {
@@ -74,6 +74,7 @@ class _LoginScreenState extends State<LoginScreen> {
           MaterialPageRoute(builder: (context) => BottomNavScreen()),
         );
       });
+
       print("result");
       //print("propid:$propertyid");
       for (int i = 0; i < result["token"].length; i++);
@@ -81,8 +82,28 @@ class _LoginScreenState extends State<LoginScreen> {
     } else {
       print("called error");
       print(response.reasonPhrase);
+      return showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: const Text("Warning"),
+          content: const Text("You have entered wrong username or password."),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(ctx).pop();
+              },
+              child: Container(
+                color: Colors.green,
+                padding: const EdgeInsets.all(14),
+                child: const Text("okay",style: TextStyle(color: Colors.white),),
+              ),
+            ),
+          ],
+        ),
+      );;
     }
-    return result["result"];
+
+
   }
 
   ///////////////////////////
