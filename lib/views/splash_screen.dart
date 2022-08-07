@@ -1,8 +1,10 @@
 import 'dart:async';
-
+import 'dart:io';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:litpoodle/components/colors.dart';
+import 'package:litpoodle/views/Nointernet.dart';
 import 'package:litpoodle/views/onboard_screen.dart';
 import 'package:localstorage/localstorage.dart';
 
@@ -17,9 +19,18 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   final LocalStorage storage = new LocalStorage('litpoodle');
+
+
   @override
   void initState() {
+
+
     super.initState();
+    _internerCheck();
+  }
+_internerCheck()async{
+  var connectivityResult = await (Connectivity().checkConnectivity());
+  if (connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi) {
     Timer(const Duration(seconds: 3), () {
       if(storage.getItem("login") == "true"){
         Navigator.of(context).pushReplacement(
@@ -33,8 +44,13 @@ class _SplashScreenState extends State<SplashScreen> {
       }
 
     });
+  } else {
+    Navigator.of(context).pushReplacement(
+      // MaterialPageRoute(builder: (_) => WelcomeScreen()),
+      MaterialPageRoute(builder: (_) => Nointernet()),
+    );
   }
-
+}
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
