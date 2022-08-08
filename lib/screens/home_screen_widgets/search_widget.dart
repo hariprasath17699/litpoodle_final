@@ -19,16 +19,18 @@ class Search {
 
 /////////////
 class Continent {
-  const Continent({
-    @required this.name,
-  });
 
+
+  const Continent({
+     this.name, this.pin,
+  });
+  final String pin;
   final String name;
 
-  @override
-  String toString() {
-    return '$name';
-  }
+// @override
+// String toString() {
+//   return '$name';
+// }
 }
 
 ///////////
