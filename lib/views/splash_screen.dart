@@ -66,6 +66,7 @@ class _SplashScreenState extends State<SplashScreen> {
     if(_connectionStatus == ConnectivityResult.mobile ||_connectionStatus == ConnectivityResult.wifi){
       Timer(const Duration(seconds: 3), () {
         if (storage.getItem("login") == "true") {
+
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (context) => BottomNavScreen()),
           );
