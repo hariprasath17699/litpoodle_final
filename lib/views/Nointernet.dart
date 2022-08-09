@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:litpoodle/views/onboard_screen.dart';
 import 'package:litpoodle/views/splash_screen.dart';
-class Nointernet extends StatefulWidget {
-  const Nointernet();
+class NointernetScreen extends StatefulWidget {
+  const NointernetScreen();
 
   @override
-  State<Nointernet> createState() => _NointernetState();
+  State<NointernetScreen> createState() => _NointernetScreenState();
 }
 
-class _NointernetState extends State<Nointernet> {
+class _NointernetScreenState extends State<NointernetScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
