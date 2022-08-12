@@ -32,6 +32,7 @@ import 'package:litpoodle/screens/bottom/bottom_navigation_screen.dart';
 import 'package:litpoodle/screens/bottom/home_welcome.dart';
 import 'package:litpoodle/screens/home_screen_widgets/search_widget.dart';
 import 'package:litpoodle/screens/scroll_widget_details.dart';
+import 'package:localstorage/localstorage.dart';
 
 // void main() {
 //   runApp(const MyApp());
@@ -116,7 +117,9 @@ class _SearchpageState extends State<Searchpage> {
   //final  List<String,dynamic> propertyList = [];
   int _current = 0;
   final CarouselController _controller = CarouselController();
+
   Future<Map<String, dynamic>> data;
+  final LocalStorage storage = new LocalStorage('litpoodle');
   @override
   void initState() {
     data = apicall();
@@ -553,22 +556,70 @@ class _SearchpageState extends State<Searchpage> {
   }
 
   Future<Map<String, dynamic>> apicall() async {
-    String searchtxt = widget.value.search;
+    String searchtxt = widget.value.search.toString();
     print(widget.value.search.toString());
+    final middle = '/';
 
-    print("yes $searchtxt");
     var headers = {
       'Authorization':
-          'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvbGl0cG9vZGxlLmNvbVwvIiwiYXVkIjoiaHR0cHM6XC9cL2xpdHBvb2RsZS5jb21cLyIsImlhdCI6MTY1MTkxNDMzMCwibmJmIjoxNjUxOTE0MzYwLCJleHAiOjE2NTE5MTQzOTAsImRhdGEiOnsiZW1haWwiOiJzYW5nYXJAdGFnd2Vicy5pbiIsInVzZXJfaWQiOiIxODQxODIifX0.OLoVbvpUjgbG_txFM7sVsLeAcaTT9c92m-TNZ07nW6A',
+          'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvbGl0cG9vZGxlLmNvbVwvIiwiYXVkIjoiaHR0cHM6XC9cL2xpdHBvb2RsZS5jb21cLyIsImlhdCI6MTY2MDIxMDQwNywibmJmIjoxNjYwMjEwNDM3LCJleHAiOjE2NjAyMTA0NjcsImRhdGEiOnsiZW1haWwiOiJzYW5nYXJAdGFnd2Vicy5pbiIsInVzZXJfaWQiOiIxODQxODIiLCJwYXNzd29yZCI6InNhbmdhciJ9fQ.7PYUSNMa5KaWlEDZvAEj6fZR920-tFXtg92AtSKeudU',
       'Cookie': 'ci_session=r6uv0s7l1v7gdr8bkutoe1o6ug9tv671'
     };
 
-    var request = http.Request(
-        'GET',
+    var request = http.MultipartRequest(
+        'POST',
         Uri.parse(
-            '$domain_url/api/search/search_homes/$searchtxt/old_age/mx_sq/2/low_val/mi_lot/type_first/type_second/type_third/type_forth/type_fifth/2/high_val/mi_sq/new_age/mx_lot/construction/amifirst/amisecond/amithird/amifour/amifive/amisix/force/pending/type_sixth/ZIP'));
+            'https://clientdev.tagwebs.in/litpoodle/api/search/search_homes'));
 
     request.headers.addAll(headers);
+    String region = "New Albany";
+    String state = "IN";
+    for(int i =0; i<searchtxt.length;i++){
+      if(searchtxt[i] == "/"){
+        int till = i;
+region = searchtxt.substring(0,till).toString();
+   state = searchtxt.substring(till+2,searchtxt.length).toString();
+
+      }
+    }
+    print("testregion: ${storage.getItem('mobilecolorfilter').toString()}");
+    request.fields
+        .addAll({'region' : region});
+    request.fields
+        .addAll({'state' : state});
+    request.fields
+        .addAll({'single_family' : storage.getItem('siglefamilycolorfilter').toString()});
+    request.fields
+        .addAll({'multi_family' : storage.getItem('multifamilycolorfilter').toString()});
+    request.fields
+        .addAll({'condo' : storage.getItem('Condocolorfilter').toString()});
+    request.fields
+        .addAll({'mobile' : storage.getItem('mobilecolorfilter').toString()});
+    request.fields
+        .addAll({'land' : storage.getItem('landcolorfilter').toString()});
+    request.fields
+        .addAll({'other' : storage.getItem('otherscolorfilter').toString()});
+    request.fields
+        .addAll({'new_construction' : storage.getItem('newconstructioncolorfilter').toString()});
+    request.fields
+        .addAll({'foreclosure' : storage.getItem('foreclosurefilter').toString()});
+    request.fields
+        .addAll({'pool' : storage.getItem('poolfilter').toString()});
+    request.fields
+        .addAll({'waterfront' : storage.getItem('waterfrontfilter').toString()});
+    request.fields
+        .addAll({'fire_place' : storage.getItem('fireplacefilter').toString()});
+    request.fields
+        .addAll({'energy_efficient' : storage.getItem('energyefficientfilter').toString()});
+    request.fields
+        .addAll({'washer_dryer' : storage.getItem('washerdryerfilter').toString()});
+    request.fields
+        .addAll({'garage_1_or_more' : storage.getItem('garagefilter').toString()});
+
+
+
+    // request.fields
+    //     .addAll({'single_family' : storage.getItem('siglefamilycolorfilter')});
 
     var streamedResponse = await request.send();
     var response = await http.Response.fromStream(streamedResponse);

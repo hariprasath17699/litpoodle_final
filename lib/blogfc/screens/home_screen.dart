@@ -13,8 +13,11 @@ import '../widgets/focus_news_drawer.dart';
 import 'single_category_slider_screen.dart';
 
 class HomeScreen extends StatefulWidget {
+
+  HomeScreen();
+
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _HomeScreenState createState() => _HomeScreenState( );
 
   static _HomeScreenState of(BuildContext context) =>
       context.findAncestorStateOfType<_HomeScreenState>();
@@ -25,6 +28,9 @@ class _HomeScreenState extends State<HomeScreen> {
   bool isLoading = true;
   List<CategoryModel> categories = [];
   CategoryModel homePageCategory;
+  bool lowhighpricecolorfilter;
+
+  _HomeScreenState();
 
   @override
   void initState() {

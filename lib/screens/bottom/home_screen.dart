@@ -15,6 +15,7 @@ import 'package:litpoodle/screens/home_screen_widgets/recommended.dart';
 import 'package:litpoodle/screens/home_screen_widgets/scrollable_container.dart';
 import 'package:litpoodle/screens/home_screen_widgets/search_widget.dart';
 import 'package:litpoodle/screens/notificationscreen.dart';
+import 'package:localstorage/localstorage.dart';
 
 import 'package:sticky_headers/sticky_headers/widget.dart';
 import 'package:http/http.dart' as http;
@@ -29,17 +30,18 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final ScrollController _mycontroller = new ScrollController();
   GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
+  final LocalStorage storage = new LocalStorage('litpoodle');
   var scaffoldKey = GlobalKey<ScaffoldState>();
   GoogleSignInController model;
   Future<Map<String, dynamic>> profilecall() async {
     var headers = {
       'Authorization':
-          'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvbGl0cG9vZGxlLmNvbVwvIiwiYXVkIjoiaHR0cHM6XC9cL2xpdHBvb2RsZS5jb21cLyIsImlhdCI6MTY1MTkxNDMzMCwibmJmIjoxNjUxOTE0MzYwLCJleHAiOjE2NTE5MTQzOTAsImRhdGEiOnsiZW1haWwiOiJzYW5nYXJAdGFnd2Vicy5pbiIsInVzZXJfaWQiOiIxODQxODIifX0.OLoVbvpUjgbG_txFM7sVsLeAcaTT9c92m-TNZ07nW6A',
+      'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvbGl0cG9vZGxlLmNvbVwvIiwiYXVkIjoiaHR0cHM6XC9cL2xpdHBvb2RsZS5jb21cLyIsImlhdCI6MTY1MTkxNDMzMCwibmJmIjoxNjUxOTE0MzYwLCJleHAiOjE2NTE5MTQzOTAsImRhdGEiOnsiZW1haWwiOiJzYW5nYXJAdGFnd2Vicy5pbiIsInVzZXJfaWQiOiIxODQxODIifX0.OLoVbvpUjgbG_txFM7sVsLeAcaTT9c92m-TNZ07nW6A',
       'Cookie': 'ci_session=3ipum7e3oe9m3ob2atlh2vbno7mkbrc5'
     };
 
     var request =
-        http.Request('GET', Uri.parse('$domain_url/api/user/auth/dashboard/'));
+    http.Request('GET', Uri.parse('$domain_url/api/user/auth/dashboard/'));
 
     request.headers.addAll(headers);
 
@@ -60,6 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
     return result["result"];
   }
+
 
   @override
   Widget build(BuildContext context) => WillPopScope(

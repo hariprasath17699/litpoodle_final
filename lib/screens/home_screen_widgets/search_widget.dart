@@ -28515,14 +28515,10 @@ class SearchWidget extends StatelessWidget {
                                               .validate()) {
                                             String stext = searchtext.text;
                                             print(searchtext.text);
-                                            print(
-                                                'search text is: ${stext.replaceAll('', '%20')}');
-                                            print(
-                                                'search text is: ${stext.replaceAll(',', '/')}');
                                             final String strplce =
                                                 stext.replaceAll(',', '/');
                                             String searchtxt =
-                                                stext.replaceAll('', '%20');
+                                                stext;
                                             print(searchtxt);
                                             const string = 'Tag webs';
                                             final splitted = string.split(" ");
@@ -28544,8 +28540,7 @@ class SearchWidget extends StatelessWidget {
                                                       // Search(search: searchtext.text),
                                                       Search(
                                                     search: searchtext.text
-                                                        .replaceAll(',', '/')
-                                                        .replaceAll(" ", "%20"),
+                                                        .replaceAll(',', '/'),
                                                     searchcity: searchtext.text,
                                                   ),
                                                 ),
@@ -28700,7 +28695,13 @@ class SearchWidget extends StatelessWidget {
                         onTap: () {
                           showDialog(
                             context: context,
-                            builder: (BuildContext context) => Filter(context),
+                            builder: (BuildContext context) => Filter(context, value:
+                            // Search(search: searchtext.text),
+                            Search(
+                              search: searchtext.text
+                                  .replaceAll(',', '/'),
+                              searchcity: searchtext.text,
+                            ),),
                           );
                         },
                         child: Container(
