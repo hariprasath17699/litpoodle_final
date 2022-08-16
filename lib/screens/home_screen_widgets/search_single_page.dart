@@ -310,7 +310,6 @@ class _SearchpageState extends State<Searchpage> {
                                           ],
                                         ),
                                       ),
-
                                       Padding(
                                         padding: const EdgeInsets.all(4.0),
                                         child: Row(
@@ -344,7 +343,6 @@ class _SearchpageState extends State<Searchpage> {
                                           ],
                                         ),
                                       ),
-
                                       Padding(
                                         padding: const EdgeInsets.fromLTRB(
                                             10, 5, 10, 5),
@@ -615,8 +613,22 @@ region = searchtxt.substring(0,till).toString();
         .addAll({'washer_dryer' : storage.getItem('washerdryerfilter').toString()});
     request.fields
         .addAll({'garage_1_or_more' : storage.getItem('garagefilter').toString()});
-
-
+    request.fields
+        .addAll({'price_min' : storage.getItem('pricemin').toString()});
+    request.fields
+        .addAll({'price_max' : storage.getItem('pricemax').toString()});
+    request.fields
+        .addAll({'age_min' : storage.getItem('agemin').toString()});
+    request.fields
+        .addAll({'age_max' : storage.getItem('agemax').toString()});
+    request.fields
+        .addAll({'sqft_min' : storage.getItem('sqftmin').toString()});
+    request.fields
+        .addAll({'sqft_max' : storage.getItem('sqftmax').toString()});
+    request.fields
+        .addAll({'lot_sqft_min' : storage.getItem('plotmin').toString()});
+    request.fields
+        .addAll({'lot_sqft_max' : storage.getItem('plotmax').toString()});
 
     // request.fields
     //     .addAll({'single_family' : storage.getItem('siglefamilycolorfilter')});

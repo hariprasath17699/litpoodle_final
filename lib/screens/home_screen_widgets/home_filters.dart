@@ -61,13 +61,18 @@ class _FilterState extends State<Filter> {
   bool garagefilter = false;
   bool yesfilter = false;
   bool Nofilter = false;
+  final TextEditingController beds = TextEditingController();
+  final TextEditingController baths = TextEditingController();
   final LocalStorage storage = new LocalStorage('litpoodle');
   Search value;
   _FilterState(this.value);
+  SfRangeValues price = SfRangeValues(0.0, 100.0);
+  SfRangeValues age = SfRangeValues(0.0, 100.0);
+  SfRangeValues sqft = SfRangeValues(0.0, 100.0);
+  SfRangeValues plotsize = SfRangeValues(0.0, 100.0);
+
   @override
   Widget build(BuildContext context) {
-    double _value = 2600.0;
-    SfRangeValues _values = SfRangeValues(0.0, 100.0);
     return SingleChildScrollView(
       child: AlertDialog(
         backgroundColor: bgColor,
@@ -635,13 +640,13 @@ class _FilterState extends State<Filter> {
                               fontSize: 12, fontWeight: FontWeight.bold),
                         ),
                         NumberInputPrefabbed.roundedButtons(
-                          incIcon: Icons.expand_more,
-                          decIcon: Icons.expand_less,
+                          incIcon: Icons.expand_less,
+                          decIcon: Icons.expand_more,
                           scaleWidth: 0.50,
                           scaleHeight: 0.50,
                           incIconSize: 35,
                           decIconSize: 35,
-                          controller: TextEditingController(),
+                          controller: beds,
                           incDecBgColor: Colors.amber,
                           buttonArrangement: ButtonArrangement.incRightDecLeft,
                         ),
@@ -656,11 +661,11 @@ class _FilterState extends State<Filter> {
                               fontSize: 12, fontWeight: FontWeight.bold),
                         ),
                         NumberInputPrefabbed.roundedButtons(
-                          incIcon: Icons.expand_more,
-                          decIcon: Icons.expand_less,
+                          incIcon: Icons.expand_less,
+                          decIcon: Icons.expand_more,
                           scaleWidth: 0.50,
                           scaleHeight: 0.50,
-                          controller: TextEditingController(),
+                          controller: baths,
                           incDecBgColor: Colors.amber,
                           decIconSize: 35,
                           incIconSize: 35,
@@ -680,14 +685,19 @@ class _FilterState extends State<Filter> {
                           activeColor: secondarycolor,
                           min: 0.0,
                           max: 100.0,
-                          values: _values,
+                          values: price,
                           interval: 20,
                           showTicks: false,
-                          showLabels: false,
+showDividers: true,
+                          showLabels: true,
+                      
                           enableTooltip: false,
-                          minorTicksPerInterval: 1,
+
                           onChanged: (SfRangeValues values) {
-                            _values = values;
+                            print(values);
+                            setState(() {
+                              price = values;
+                            });
                           },
                         ),
                       ],
@@ -704,14 +714,16 @@ class _FilterState extends State<Filter> {
                           activeColor: secondarycolor,
                           min: 0.0,
                           max: 100.0,
-                          values: _values,
+                          values: age,
                           interval: 20,
                           showTicks: false,
-                          showLabels: false,
+                          showLabels: true,
                           enableTooltip: false,
                           minorTicksPerInterval: 1,
                           onChanged: (SfRangeValues values) {
-                            _values = values;
+                            setState(() {
+                              age = values;
+                            });
                           },
                         ),
                         Column(
@@ -726,14 +738,16 @@ class _FilterState extends State<Filter> {
                               activeColor: secondarycolor,
                               min: 0.0,
                               max: 100.0,
-                              values: _values,
+                              values: sqft,
                               interval: 20,
                               showTicks: false,
-                              showLabels: false,
+                              showLabels: true,
                               enableTooltip: false,
                               minorTicksPerInterval: 1,
                               onChanged: (SfRangeValues values) {
-                                _values = values;
+                                setState(() {
+                                  sqft = values;
+                                });
                               },
                             ),
                           ],
@@ -750,14 +764,17 @@ class _FilterState extends State<Filter> {
                               activeColor: secondarycolor,
                               min: 0.0,
                               max: 100.0,
-                              values: _values,
+                              values: plotsize,
                               interval: 20,
                               showTicks: false,
-                              showLabels: false,
+                              showLabels: true,
                               enableTooltip: false,
                               minorTicksPerInterval: 1,
                               onChanged: (SfRangeValues values) {
-                                _values = values;
+
+                                setState(() {
+                                  plotsize = values;
+                                });
                               },
                             ),
                             SizedBox(
@@ -1327,6 +1344,16 @@ class _FilterState extends State<Filter> {
                                             storage.setItem('garagefilter', garagefilter);
                                             storage.setItem('yesfilter', yesfilter);
                                             storage.setItem('Nofilter', Nofilter);
+                                            storage.setItem('beds', beds.text);
+                                            storage.setItem('baths', baths.text);
+                                            storage.setItem('pricemin', price.start);
+                                            storage.setItem('pricemax', price.end);
+                                            storage.setItem('agemin', age.start);
+                                            storage.setItem('agemax', age.end);
+                                            storage.setItem('sqftmin', sqft.start);
+                                            storage.setItem('sqftmax', sqft.end);
+                                            storage.setItem('plotmin', plotsize.start);
+                                            storage.setItem('plotmax', plotsize.end);
 
                                            Navigator.pop(context);
 
