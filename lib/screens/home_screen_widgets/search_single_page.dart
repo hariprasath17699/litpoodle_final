@@ -577,7 +577,6 @@ class _SearchpageState extends State<Searchpage> {
         int till = i;
 region = searchtxt.substring(0,till).toString();
    state = searchtxt.substring(till+2,searchtxt.length).toString();
-
       }
     }
     print("testregion: ${storage.getItem('mobilecolorfilter').toString()}");
@@ -629,6 +628,9 @@ region = searchtxt.substring(0,till).toString();
         .addAll({'lot_sqft_min' : storage.getItem('plotmin').toString()});
     request.fields
         .addAll({'lot_sqft_max' : storage.getItem('plotmax').toString()});
+    request.fields
+        .addAll({'pending' : storage.getItem('plotmax').toString()});
+
 
     // request.fields
     //     .addAll({'single_family' : storage.getItem('siglefamilycolorfilter')});

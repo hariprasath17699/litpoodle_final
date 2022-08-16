@@ -39,6 +39,7 @@ class _FilterState extends State<Filter> {
   Color garage = Colors.grey;
   Color yes = Colors.grey;
   Color No = Colors.grey;
+  Color pending = Colors.grey;
   bool lowhighpricecolorfilter = false;
   bool highlowpricecolorfilter = false;
   bool sqftcolorfilter = false;
@@ -63,13 +64,46 @@ class _FilterState extends State<Filter> {
   bool Nofilter = false;
   final TextEditingController beds = TextEditingController();
   final TextEditingController baths = TextEditingController();
+  final TextEditingController pricemin = TextEditingController();
+  final TextEditingController pricemax = TextEditingController();
+  final TextEditingController agemin = TextEditingController();
+  final TextEditingController agemax = TextEditingController();
+  final TextEditingController sqftmin = TextEditingController();
+  final TextEditingController sqftmax = TextEditingController();
+  final TextEditingController plotsizemin = TextEditingController();
+  final TextEditingController plotsizemax = TextEditingController();
   final LocalStorage storage = new LocalStorage('litpoodle');
   Search value;
   _FilterState(this.value);
-  SfRangeValues price = SfRangeValues(0.0, 100.0);
-  SfRangeValues age = SfRangeValues(0.0, 100.0);
-  SfRangeValues sqft = SfRangeValues(0.0, 100.0);
-  SfRangeValues plotsize = SfRangeValues(0.0, 100.0);
+  SfRangeValues price = SfRangeValues(0, 100);
+  SfRangeValues age = SfRangeValues(0, 100);
+  SfRangeValues sqft = SfRangeValues(0, 100);
+  SfRangeValues plotsize = SfRangeValues(0, 100);
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    storage.getItem('highlowpricecolorfilter') == true ? highlowpricecolor = Colors.red : Colors.grey;
+    storage.getItem('sqftcolorfilter')  == true ? sqftcolor = Colors.red: Colors.grey;
+    storage.getItem('bathcolorfilter') == true ? bathcolor = Colors.red: Colors.grey;
+    storage.getItem('bedcolorfilter') == true ? bedcolor = Colors.red: Colors.grey;
+    storage.getItem('yearscolorfilter') == true ? yearscolor = Colors.red: Colors.grey;
+    storage.getItem('siglefamilycolorfilter') == true ? siglefamilycolor = Colors.red: Colors.grey;
+    storage.getItem('multifamilycolorfilter') == true ? multifamilycolor = Colors.red: Colors.grey;
+    storage.getItem('mobilecolorfilter') == true ? mobilecolor = Colors.red: Colors.grey;
+    storage.getItem('landcolorfilter') == true ? landcolor = Colors.red: Colors.grey;
+    storage.getItem('otherscolorfilter') == true ? otherscolor = Colors.red: Colors.grey;
+    storage.getItem('Condocolorfilter') == true ? Condocolor = Colors.red: Colors.grey;
+    storage.getItem('newconstructioncolorfilter') == true ? newconstructioncolor = Colors.red: Colors.grey;
+    storage.getItem('foreclosurefilter') == true ? foreclosure = Colors.red: Colors.grey;
+    storage.getItem('poolfilter') == true ? pool = Colors.red: Colors.grey;
+    storage.getItem('waterfrontfilter') == true ? waterfront = Colors.red: Colors.grey;
+    storage.getItem('fireplacefilter') == true ? fireplace = Colors.red: Colors.grey;
+    storage.getItem('energyefficientfilter') == true ? energyefficient = Colors.red: Colors.grey;
+    storage.getItem('washerdryerfilter') == true ? washerdryer = Colors.red: Colors.grey;
+    storage.getItem('garagefilter') == true ? garage = Colors.red: Colors.grey;
+    storage.getItem('pending') == true ? pending = Colors.red: Colors.grey;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -681,25 +715,54 @@ class _FilterState extends State<Filter> {
                           style: TextStyle(
                               fontSize: 12, fontWeight: FontWeight.bold),
                         ),
-                        SfRangeSlider(
-                          activeColor: secondarycolor,
-                          min: 0.0,
-                          max: 100.0,
-                          values: price,
-                          interval: 20,
-                          showTicks: false,
-showDividers: true,
-                          showLabels: true,
-                      
-                          enableTooltip: false,
+                        TextField(
+                          controller: pricemin,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            focusColor: secondarycolor,
 
-                          onChanged: (SfRangeValues values) {
-                            print(values);
-                            setState(() {
-                              price = values;
-                            });
-                          },
+                            hintText: "Min",
+                            // labelText: 'password',
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 4, horizontal: 5),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(14)),
+                            enabledBorder: OutlineInputBorder(
+                                borderSide:
+                                BorderSide(color: Colors.grey[300]),
+                                borderRadius: BorderRadius.circular(14)),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: secondarycolor),
+                                borderRadius: BorderRadius.circular(14)),
+
+
+                          ),
                         ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+
+                          child: TextField(
+                            keyboardType: TextInputType.number,
+                            controller: pricemax,
+                            decoration: InputDecoration(
+                              focusColor: secondarycolor,
+                              hintText: "Max",
+                              contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 4, horizontal: 5),
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(14)),
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide:
+                                  BorderSide(color: Colors.grey[300]),
+                                  borderRadius: BorderRadius.circular(14)),
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: secondarycolor),
+                                  borderRadius: BorderRadius.circular(14)),
+                            ),
+                          ),
+                        )
                       ],
                     ),
                     Column(
@@ -710,21 +773,52 @@ showDividers: true,
                           style: TextStyle(
                               fontSize: 12, fontWeight: FontWeight.bold),
                         ),
-                        SfRangeSlider(
-                          activeColor: secondarycolor,
-                          min: 0.0,
-                          max: 100.0,
-                          values: age,
-                          interval: 20,
-                          showTicks: false,
-                          showLabels: true,
-                          enableTooltip: false,
-                          minorTicksPerInterval: 1,
-                          onChanged: (SfRangeValues values) {
-                            setState(() {
-                              age = values;
-                            });
-                          },
+                        TextField(
+                          controller: agemin,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            focusColor: secondarycolor,
+
+                            hintText: "Min",
+                            // labelText: 'password',
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 4, horizontal: 5),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(14)),
+                            enabledBorder: OutlineInputBorder(
+                                borderSide:
+                                BorderSide(color: Colors.grey[300]),
+                                borderRadius: BorderRadius.circular(14)),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: secondarycolor),
+                                borderRadius: BorderRadius.circular(14)),
+
+
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          child: TextField(
+                            keyboardType: TextInputType.number,
+                            controller: agemax,
+                            decoration: InputDecoration(
+                              focusColor: secondarycolor,
+                              hintText: "Max",
+                              contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 4, horizontal: 5),
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(14)),
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide:
+                                  BorderSide(color: Colors.grey[300]),
+                                  borderRadius: BorderRadius.circular(14)),
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: secondarycolor),
+                                  borderRadius: BorderRadius.circular(14)),
+                            ),
+                          ),
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -734,22 +828,54 @@ showDividers: true,
                               style: TextStyle(
                                   fontSize: 12, fontWeight: FontWeight.bold),
                             ),
-                            SfRangeSlider(
-                              activeColor: secondarycolor,
-                              min: 0.0,
-                              max: 100.0,
-                              values: sqft,
-                              interval: 20,
-                              showTicks: false,
-                              showLabels: true,
-                              enableTooltip: false,
-                              minorTicksPerInterval: 1,
-                              onChanged: (SfRangeValues values) {
-                                setState(() {
-                                  sqft = values;
-                                });
-                              },
+                            TextField(
+                              controller: sqftmin,
+                              keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                focusColor: secondarycolor,
+
+                                hintText: "Min",
+                                // labelText: 'password',
+                                contentPadding: const EdgeInsets.symmetric(
+                                    vertical: 4, horizontal: 5),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(14)),
+                                enabledBorder: OutlineInputBorder(
+                                    borderSide:
+                                    BorderSide(color: Colors.grey[300]),
+                                    borderRadius: BorderRadius.circular(14)),
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: secondarycolor),
+                                    borderRadius: BorderRadius.circular(14)),
+
+
+                              ),
                             ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Container(
+
+                              child: TextField(
+                                keyboardType: TextInputType.number,
+                                controller: sqftmax,
+                                decoration: InputDecoration(
+                                  focusColor: secondarycolor,
+                                  hintText: "Max",
+                                  contentPadding: const EdgeInsets.symmetric(
+                                      vertical: 4, horizontal: 5),
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(14)),
+                                  enabledBorder: OutlineInputBorder(
+                                      borderSide:
+                                      BorderSide(color: Colors.grey[300]),
+                                      borderRadius: BorderRadius.circular(14)),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(color: secondarycolor),
+                                      borderRadius: BorderRadius.circular(14)),
+                                ),
+                              ),
+                            )
                           ],
                         ),
                         Column(
@@ -760,22 +886,53 @@ showDividers: true,
                               style: TextStyle(
                                   fontSize: 12, fontWeight: FontWeight.bold),
                             ),
-                            SfRangeSlider(
-                              activeColor: secondarycolor,
-                              min: 0.0,
-                              max: 100.0,
-                              values: plotsize,
-                              interval: 20,
-                              showTicks: false,
-                              showLabels: true,
-                              enableTooltip: false,
-                              minorTicksPerInterval: 1,
-                              onChanged: (SfRangeValues values) {
+                            TextField(
+                              controller: plotsizemin,
+                              keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                focusColor: secondarycolor,
 
-                                setState(() {
-                                  plotsize = values;
-                                });
-                              },
+                                hintText: "Min",
+                                // labelText: 'password',
+                                contentPadding: const EdgeInsets.symmetric(
+                                    vertical: 4, horizontal: 5),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(14)),
+                                enabledBorder: OutlineInputBorder(
+                                    borderSide:
+                                    BorderSide(color: Colors.grey[300]),
+                                    borderRadius: BorderRadius.circular(14)),
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: secondarycolor),
+                                    borderRadius: BorderRadius.circular(14)),
+
+
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Container(
+
+                              child: TextField(
+                                keyboardType: TextInputType.number,
+                                controller: plotsizemax,
+                                decoration: InputDecoration(
+                                  focusColor: secondarycolor,
+                                  hintText: "Max",
+                                  contentPadding: const EdgeInsets.symmetric(
+                                      vertical: 4, horizontal: 5),
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(14)),
+                                  enabledBorder: OutlineInputBorder(
+                                      borderSide:
+                                      BorderSide(color: Colors.grey[300]),
+                                      borderRadius: BorderRadius.circular(14)),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(color: secondarycolor),
+                                      borderRadius: BorderRadius.circular(14)),
+                                ),
+                              ),
                             ),
                             SizedBox(
                               height: 50,
@@ -1299,8 +1456,18 @@ showDividers: true,
                                             storage.setItem('energyefficientfilter', false);
                                             storage.setItem('washerdryerfilter', false);
                                             storage.setItem('garagefilter', false);
-                                            storage.setItem('yesfilter', false);
-                                            storage.setItem('Nofilter', false);
+                                            storage.setItem('pending', false);
+                                            storage.setItem('beds', beds.text);
+                                            storage.setItem('baths', baths.text);
+                                            storage.setItem('pricemin', "");
+                                            storage.setItem('pricemax', "");
+                                            storage.setItem('agemin', "");
+                                            storage.setItem('agemax', "");
+                                            storage.setItem('sqftmin', "");
+                                            storage.setItem('sqftmax', "");
+                                            storage.setItem('plotmin', "");
+                                            storage.setItem('plotmax', "");
+
                                           },
                                           child: Container(
                                             height: 50,
@@ -1346,15 +1513,15 @@ showDividers: true,
                                             storage.setItem('Nofilter', Nofilter);
                                             storage.setItem('beds', beds.text);
                                             storage.setItem('baths', baths.text);
-                                            storage.setItem('pricemin', price.start);
-                                            storage.setItem('pricemax', price.end);
-                                            storage.setItem('agemin', age.start);
-                                            storage.setItem('agemax', age.end);
-                                            storage.setItem('sqftmin', sqft.start);
-                                            storage.setItem('sqftmax', sqft.end);
-                                            storage.setItem('plotmin', plotsize.start);
-                                            storage.setItem('plotmax', plotsize.end);
-
+                                            storage.setItem('pricemin', pricemin.text);
+                                            storage.setItem('pricemax', pricemax.text);
+                                            storage.setItem('agemin', agemin.text);
+                                            storage.setItem('agemax', agemax.text);
+                                            storage.setItem('sqftmin', sqftmin.text);
+                                            storage.setItem('sqftmax', sqftmax.text);
+                                            storage.setItem('plotmin', plotsizemin.text);
+                                            storage.setItem('plotmax', plotsizemax.text);
+                                            storage.setItem('pending', true);
                                            Navigator.pop(context);
 
 
