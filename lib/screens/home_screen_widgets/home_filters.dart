@@ -1437,37 +1437,39 @@ class _FilterState extends State<Filter> {
                                       children: [
                                         GestureDetector(
                                           onTap:(){
-                                            storage.setItem('highlowpricecolorfilter', false);
-                                            storage.setItem('sqftcolorfilter', false);
-                                            storage.setItem('bathcolorfilter', false);
-                                            storage.setItem('bedcolorfilter', false);
-                                            storage.setItem('yearscolorfilter', false);
-                                            storage.setItem('siglefamilycolorfilter', false);
-                                            storage.setItem('multifamilycolorfilter', false);
-                                            storage.setItem('mobilecolorfilter', false);
-                                            storage.setItem('landcolorfilter', false);
-                                            storage.setItem('otherscolorfilter', false);
-                                            storage.setItem('Condocolorfilter', false);
-                                            storage.setItem('newconstructioncolorfilter', false);
-                                            storage.setItem('foreclosurefilter', false);
-                                            storage.setItem('poolfilter', false);
-                                            storage.setItem('waterfrontfilter', false);
-                                            storage.setItem('fireplacefilter', false);
-                                            storage.setItem('energyefficientfilter', false);
-                                            storage.setItem('washerdryerfilter', false);
-                                            storage.setItem('garagefilter', false);
-                                            storage.setItem('pending', false);
-                                            storage.setItem('beds', beds.text);
-                                            storage.setItem('baths', baths.text);
-                                            storage.setItem('pricemin', "");
-                                            storage.setItem('pricemax', "");
-                                            storage.setItem('agemin', "");
-                                            storage.setItem('agemax', "");
-                                            storage.setItem('sqftmin', "");
-                                            storage.setItem('sqftmax', "");
-                                            storage.setItem('plotmin', "");
-                                            storage.setItem('plotmax', "");
-
+                                            setState(() {
+                                              storage.setItem('highlowpricecolorfilter', false);
+                                              storage.setItem('sqftcolorfilter', false);
+                                              storage.setItem('bathcolorfilter', false);
+                                              storage.setItem('bedcolorfilter', false);
+                                              storage.setItem('yearscolorfilter', false);
+                                              storage.setItem('siglefamilycolorfilter', false);
+                                              storage.setItem('multifamilycolorfilter', false);
+                                              storage.setItem('mobilecolorfilter', false);
+                                              storage.setItem('landcolorfilter', false);
+                                              storage.setItem('otherscolorfilter', false);
+                                              storage.setItem('Condocolorfilter', false);
+                                              storage.setItem('newconstructioncolorfilter', false);
+                                              storage.setItem('foreclosurefilter', false);
+                                              storage.setItem('poolfilter', false);
+                                              storage.setItem('waterfrontfilter', false);
+                                              storage.setItem('fireplacefilter', false);
+                                              storage.setItem('energyefficientfilter', false);
+                                              storage.setItem('washerdryerfilter', false);
+                                              storage.setItem('garagefilter', false);
+                                              storage.setItem('pending', false);
+                                              storage.setItem('beds', beds.text);
+                                              storage.setItem('baths', baths.text);
+                                              storage.setItem('pricemin', "");
+                                              storage.setItem('pricemax', "");
+                                              storage.setItem('agemin', "");
+                                              storage.setItem('agemax', "");
+                                              storage.setItem('sqftmin', "");
+                                              storage.setItem('sqftmax', "");
+                                              storage.setItem('plotmin', "");
+                                              storage.setItem('plotmax', "");
+                                            });
+                                            Navigator.pop(context);
                                           },
                                           child: Container(
                                             height: 50,
@@ -1490,6 +1492,7 @@ class _FilterState extends State<Filter> {
                                         ),
                                         GestureDetector(
                                           onTap: (){
+
                                             storage.setItem('highlowpricecolorfilter', highlowpricecolorfilter);
                                             storage.setItem('sqftcolorfilter', sqftcolorfilter);
                                             storage.setItem('bathcolorfilter', bathcolorfilter);
